@@ -10,6 +10,7 @@ var mongoose = require("mongoose");
 var HomeB = require('./models/HomeB');
 var HomeQ = require('./models/HomeQ');
 var WcB = require('./models/WcB');
+var TrucNhat = require('./models/TrucNhat');
 var app = express();
 var PORT = process.env.PORT || 5000;
 app.use(cors());
@@ -34,7 +35,7 @@ var connectDB = /*#__PURE__*/function () {
         case 0:
           _context.prev = 0;
           _context.next = 3;
-          return mongoose.connect('mongodb+srv://phong410:phong410@cluster0.zapjyiw.mongodb.net/?retryWrites=true&w=majority', {
+          return mongoose.connect('mongodb+srv://luyen123:luyen123@p410.oxok5t5.mongodb.net/?retryWrites=true&w=majority', {
             useNewUrlParser: true,
             useUnifiedTopology: true
           });
@@ -384,6 +385,90 @@ app["delete"]('/wc-bong/:id', /*#__PURE__*/function () {
   }));
   return function (_x17, _x18) {
     return _ref10.apply(this, arguments);
+  };
+}());
+// truc nhat
+app.get('/truc-nhat', /*#__PURE__*/function () {
+  var _ref11 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee11(req, res) {
+    var data;
+    return _regeneratorRuntime().wrap(function _callee11$(_context11) {
+      while (1) switch (_context11.prev = _context11.next) {
+        case 0:
+          _context11.prev = 0;
+          _context11.next = 3;
+          return TrucNhat.find();
+        case 3:
+          data = _context11.sent;
+          res.json(data);
+          _context11.next = 10;
+          break;
+        case 7:
+          _context11.prev = 7;
+          _context11.t0 = _context11["catch"](0);
+          res.json(_context11.t0);
+        case 10:
+        case "end":
+          return _context11.stop();
+      }
+    }, _callee11, null, [[0, 7]]);
+  }));
+  return function (_x19, _x20) {
+    return _ref11.apply(this, arguments);
+  };
+}());
+app.post('/truc-nhat', function (req, res) {
+  try {
+    var _req$body4 = req.body,
+      user = _req$body4.user,
+      day = _req$body4.day,
+      rac = _req$body4.rac,
+      nuoc = _req$body4.nuoc,
+      date = _req$body4.date,
+      modifiedBy = _req$body4.modifiedBy;
+    var data = new TrucNhat({
+      user: user,
+      day: day,
+      rac: rac,
+      nuoc: nuoc,
+      date: date,
+      modifiedBy: modifiedBy
+    });
+    data.save(data);
+    res.json(data);
+  } catch (error) {
+    res.json(error);
+  }
+});
+app.put('/truc-nhat', /*#__PURE__*/function () {
+  var _ref12 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee12(req, res) {
+    var id;
+    return _regeneratorRuntime().wrap(function _callee12$(_context12) {
+      while (1) switch (_context12.prev = _context12.next) {
+        case 0:
+          id = req.body._id;
+          delete req.body._id;
+          _context12.prev = 2;
+          _context12.next = 5;
+          return TrucNhat.updateOne({
+            id: id
+          }, req.body);
+        case 5:
+          res.json(id);
+          _context12.next = 12;
+          break;
+        case 8:
+          _context12.prev = 8;
+          _context12.t0 = _context12["catch"](2);
+          res.json("error");
+          console.log(_context12.t0);
+        case 12:
+        case "end":
+          return _context12.stop();
+      }
+    }, _callee12, null, [[2, 8]]);
+  }));
+  return function (_x21, _x22) {
+    return _ref12.apply(this, arguments);
   };
 }());
 app.listen(PORT, function () {
